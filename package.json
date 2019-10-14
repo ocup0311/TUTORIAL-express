@@ -1,6 +1,9 @@
 {
   "name": "express-locallibrary-tutorial",
   "version": "0.0.0",
+  "engines": {
+    "node": "10.15.3"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -22,5 +25,17 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
-  }
+  },
+  "description": "learning how to create a local library in express.js",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocup0311/express-locallibrary-tutorial.git"
+  },
+  "author": "OcupHuang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ocup0311/express-locallibrary-tutorial/issues"
+  },
+  "homepage": "https://github.com/ocup0311/express-locallibrary-tutorial#readme"
 }
