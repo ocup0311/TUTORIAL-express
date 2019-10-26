@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
+ 
+  if user.first_name
+    h1 !{user.first_name}'s profile:
+  else
+    h1 !{user.username}'s profile:
+
+  p Name: !{user.first_name}, !{user.family_name}
+  p Email: !{user.email}
+
+  hr
+  form(method='get' action='/users/logout')
+      
+    button.btn.btn-primary(type='submit') Logout

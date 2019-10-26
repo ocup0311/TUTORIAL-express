@@ -12,3 +12,13 @@ a {
     padding: 0;
     list-style: none;
 }
+
+.clearfix {
+  overflow: auto;
+}
+
+.logout {
+  border: none;
+  margin: 0;
+  padding: 0;
+}

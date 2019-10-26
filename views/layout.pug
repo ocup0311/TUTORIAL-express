@@ -9,6 +9,27 @@ html(lang='en')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    div(class='clearfix' style='display: block;')
+      nav.navbar.navbar-default.container-fluid.navbar-header
+        a.navbar-brand(href='/') 
+          if user
+            span Hi, !{user.first_name}. Welcome to Ocup's Local Library
+          else
+            span Ocup's Local Library
+
+      ul.nav.navbar-nav(style='display: block; float: right;')
+        if user
+          li
+            a(href='/users/profile') Profile
+          li
+            a(href='/users/logout') Logout
+        else
+          li
+            a(href='/users/signup') Signup
+          li
+            a(href='/users/login') Login
+
+
     div(class='container-fluid')
       div(class='row')
         div(class='col-sm-2')

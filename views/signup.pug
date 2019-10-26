@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1= title
+  form(method='POST' action='')
+
+    div.form-group
+      label(for='username') Username:
+      input#username.form-control(type='text' placeholder='6~18 letters' name='username' value=(undefined===user ? '' : user.username) required='true' autofocus)
+      label(for='password') Password:
+      input#password.form-control(type='text' placeholder='6~30 letters' name='password' value=(undefined===user ? '' : user.password) required='true') 
+      
+    div.form-group
+      label(for='first_name') First Name:
+      input#first_name.form-control(type='text' placeholder='First name (Christian)' name='first_name' required='true' value=(undefined===user ? '' : user.first_name) )
+      label(for='family_name') Family Name:
+      input#family_name.form-control(type='text' placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===user ? '' : user.family_name))
+      
+      label(for='email') Email:
+      input#email.form-control(type='email' name='email' value=(undefined===user ? '' : user.email))      
+
+    button.btn.btn-primary(type='submit') Signup
+
+
+  if errors 
+   ul
+    for error in errors
+     li!= error.msg   
+
+
+

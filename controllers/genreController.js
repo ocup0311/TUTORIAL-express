@@ -4,7 +4,7 @@ const async = require('async')
 const validator = require('express-validator')
 
 // Display list of all Genre.
-exports.genre_list = function (req, res, next) {
+exports.genre_list = (req, res, next) => {
   Genre.find()
     .sort([['name', 'ascending']])
     .exec(function (err, listGenre) {
