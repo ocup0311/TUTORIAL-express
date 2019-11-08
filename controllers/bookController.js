@@ -23,7 +23,7 @@ exports.index = (req, res) => {
       Genre.countDocuments({}, callback)
     }
   }, (err, results) => {
-    res.render('index', { title: 'Local Library Home', error: err, data: results })
+    res.render('index', { title: '歐杯的圖書世界', error: err, data: results })
   })
 }
 
@@ -34,7 +34,7 @@ exports.book_list = (req, res, next) => {
     .exec((err, listBooks) => {
       if (err) { return next(err) }
       // Successful, so render
-      res.render('book_list', { title: 'Book List', book_list: listBooks })
+      res.render('book_list', { title: '書籍目錄', book_list: listBooks })
     })
 }
 
@@ -75,7 +75,7 @@ exports.book_create_get = (req, res, next) => {
     }
   }, (err, results) => {
     if (err) { return next(err) }
-    res.render('book_form', { title: 'Create Book', authors: results.authors, genres: results.genres })
+    res.render('book_form', { title: '新增書籍', authors: results.authors, genres: results.genres })
   })
 }
 
@@ -93,7 +93,7 @@ exports.book_create_post = [
   // Validate fields.
   validator.body('title', 'Title must not be empty.').isLength({ min: 1 }).trim(),
   validator.body('author', 'Author must not be empty.').isLength({ min: 1 }).trim(),
-  validator.body('summary', 'Summary must not be empty.').isLength({ min: 1 }).trim(),
+  validator.body('summary', 'Summary must not be empty.').isLength({ min: 50, max: 200 }).trim(),
   validator.body('isbn', 'ISBN must not be empty').isLength({ min: 1 }).trim(),
 
   // Sanitize fields (using wildcard).
@@ -139,7 +139,7 @@ exports.book_create_post = [
           }
         }
 
-        res.render('book_form', { title: 'Create Book', authors: results.authors, genres: results.genres, book: book, errors: errors.array() })
+        res.render('book_form', { title: '新增書籍', authors: results.authors, genres: results.genres, book: book, errors: errors.array() })
       })
     } else {
       // Data from form is valid. Save book.
@@ -167,7 +167,7 @@ exports.book_delete_get = (req, res, next) => {
       res.redirect('/catalog/books')
     }
     // Successful, so render.
-    res.render('book_delete', { title: 'Delete Book', book: results.book, book_bookinstances: results.books_bookinstances })
+    res.render('book_delete', { title: '刪除書籍', book: results.book, book_bookinstances: results.books_bookinstances })
   })
 }
 
@@ -185,7 +185,7 @@ exports.book_delete_post = (req, res, next) => {
     // Success
     if (results.books_bookinstances.length > 0) {
       // Book has bookinstances. Render in same way as for GET route.
-      res.render('book_delete', { title: 'Delete Book', book: results.book, book_bookinstances: results.books_bookinstances })
+      res.render('book_delete', { title: '刪除書籍', book: results.book, book_bookinstances: results.books_bookinstances })
     } else {
       // Book has no bookinstances. Delete object and redirect to the list of books.
       Book.findByIdAndRemove(req.body.bookid, (err) => {
@@ -226,7 +226,7 @@ exports.book_update_get = (req, res, next) => {
         }
       }
     }
-    res.render('book_form', { title: 'Update Book', authors: results.authors, genres: results.genres, book: results.book })
+    res.render('book_form', { title: '更新書籍資訊', authors: results.authors, genres: results.genres, book: results.book })
   })
 }
 
@@ -291,7 +291,7 @@ exports.book_update_post = [
             results.genres[i].checked = 'true'
           }
         }
-        res.render('book_form', { title: 'Update Book', authors: results.authors, genres: results.genres, book: book, errors: errors.array() })
+        res.render('book_form', { title: '更新書籍資訊', authors: results.authors, genres: results.genres, book: book, errors: errors.array() })
       })
     } else {
       // Data from form is valid. Update the record.

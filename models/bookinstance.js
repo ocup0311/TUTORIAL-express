@@ -14,6 +14,30 @@ const BookInstanceSchema = new Schema(
 
 // Virtual for bookinstance's URL
 BookInstanceSchema
+  .virtual('statusName')
+  .get(function () {
+    const status = this.status
+    let x
+    switch (status) {
+      case 'Available':
+        x = '可借閱'
+        break
+      case 'Maintenance':
+        x = '書本保養中'
+        break
+      case 'Loaned':
+        x = '已被借閱'
+        break
+      case 'Reserved':
+        x = '已被預約'
+        break
+      default:
+        x = 'No value found'
+    }
+    return x
+  })
+
+BookInstanceSchema
   .virtual('url')
   .get(function () {
     return '/catalog/bookinstance/' + this._id

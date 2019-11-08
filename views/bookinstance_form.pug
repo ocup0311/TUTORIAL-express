@@ -6,7 +6,7 @@ block content
   form(method='POST' action='')
     //- 書名欄位
     div.form-group
-      label(for='book') Book:
+      label(for='book') 書名：
       select#book.form-control(type='select' placeholder='Select book' name='book' required='true')
         - book_list.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         for book in book_list
@@ -22,15 +22,15 @@ block content
             option(value=book._id) #{book.title}
     //-  出版社欄位
     div.form-group
-      label(for='imprint') Imprint:
+      label(for='imprint') 出版商：
       input#imprint.form-control(type='text' placeholder='Publisher and date information' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint))
     //- 到期日欄位
     div.form-group
-      label(for='due_back') Date when book available:
+      label(for='due_back') 預計書本到館日期：
       input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.dueBackForFillIn))
     //- 狀態欄位
     div.form-group
-      label(for='status') Status:
+      label(for='status') 書本狀態：
       select#status.form-control(type='select' placeholder='Select status' name='status' required='true') 
         if bookinstance            
          option(
@@ -38,12 +38,12 @@ block content
           selected='selected'
          ) #{bookinstance.status}
         else
-          option(value='Maintenance') Maintenance
-          option(value='Available') Available
-          option(value='Loaned') Loaned
-          option(value='Reserved') Reserved
+          option(value='Maintenance') 書本保養中
+          option(value='Available') 可借閱
+          option(value='Loaned') 已被借閱
+          option(value='Reserved') 已被預約
 
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='submit') 新增藏書
 
   if errors 
     ul

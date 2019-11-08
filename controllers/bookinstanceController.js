@@ -11,7 +11,7 @@ exports.bookinstance_list = (req, res, next) => {
     .exec((err, listBookinstances) => {
       if (err) { return next(err) }
       // Successful, so render
-      res.render('bookinstance_list', { title: 'Book Instance List', bookinstance_list: listBookinstances })
+      res.render('bookinstance_list', { title: '本館藏書目錄', bookinstance_list: listBookinstances })
     })
 }
 
@@ -27,7 +27,7 @@ exports.bookinstance_detail = (req, res, next) => {
         return next(err)
       }
       // Successful, so render.
-      res.render('bookinstance_detail', { title: 'Copy: ' + bookinstance.book.title, bookinstance: bookinstance })
+      res.render('bookinstance_detail', { title: '藏書： ' + bookinstance.book.title, bookinstance: bookinstance })
     })
 }
 
@@ -37,7 +37,7 @@ exports.bookinstance_create_get = (req, res, next) => {
     .exec((err, books) => {
       if (err) { return next(err) }
       // Successful, so render.
-      res.render('bookinstance_form', { title: 'Create BookInstance', book_list: books })
+      res.render('bookinstance_form', { title: '新增藏書', book_list: books })
     })
 }
 
@@ -74,7 +74,7 @@ exports.bookinstance_create_post = [
         .exec((err, books) => {
           if (err) { return next(err) }
           // Successful, so render.
-          res.render('bookinstance_form', { title: 'Create BookInstance', book_list: books, selected_book: bookinstance.book._id, errors: errors.array(), bookinstance: bookinstance })
+          res.render('bookinstance_form', { title: '新增藏書', book_list: books, selected_book: bookinstance.book._id, errors: errors.array(), bookinstance: bookinstance })
         })
     } else {
       // Data from form is valid.
@@ -98,7 +98,7 @@ exports.bookinstance_delete_get = (req, res, next) => {
         res.redirect('/catalog/bookinstances')
       }
       // Successful, so render.
-      res.render('bookinstance_delete', { title: 'Delete BookInstance', bookinstance: results })
+      res.render('bookinstance_delete', { title: '刪除藏書', bookinstance: results })
     })
 }
 
@@ -135,7 +135,7 @@ exports.bookinstance_update_get = (req, res, next) => {
       return next(err)
     }
     // Success.
-    res.render('bookinstance_form', { title: 'Update Bookinstance', book_list: results.books, bookinstance: results.bookinstance })
+    res.render('bookinstance_form', { title: '更新藏書資訊', book_list: results.books, bookinstance: results.bookinstance })
   })
 
   BookInstance.findById(req.params.id)
@@ -143,7 +143,7 @@ exports.bookinstance_update_get = (req, res, next) => {
     .exec((err, books) => {
       if (err) { return next(err) }
       // Successful, so render.
-      res.render('bookinstance_form', { title: 'Update BookInstance', book_list: books })
+      res.render('bookinstance_form', { title: '更新藏書資訊', book_list: books })
     })
 }
 
@@ -181,7 +181,7 @@ exports.bookinstance_update_post = [
         .exec((err, books) => {
           if (err) { return next(err) }
           // Successful, so render.
-          res.render('bookinstance_form', { title: 'Update BookInstance', book_list: books, selected_book: bookinstance.book._id, errors: errors.array(), bookinstance: bookinstance })
+          res.render('bookinstance_form', { title: '更新藏書資訊', book_list: books, selected_book: bookinstance.book._id, errors: errors.array(), bookinstance: bookinstance })
         })
     } else {
       // Data from form is valid.

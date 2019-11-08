@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-  h1 Author: #{author.name}
+  h1 作者： #{author.name}
   if author.birthDay || author.deathDay
     |  (#{author.birthDay} - #{author.deathDay}) 
   else
@@ -10,7 +10,7 @@ block content
     
   div(style='margin-left:20px;margin-top:20px')
 
-    h4 Books
+    h4 書籍：
     
     dl
       each book in author_books
@@ -19,10 +19,10 @@ block content
         dd #{book.summary}
 
       else
-        p This author has no books.
+        p 本館尚未有該作者的藏書，欲提供者請與本館聯絡，萬分感謝。
 
     hr
     p
-      a(href=author.url+'/delete') Delete author
+      a(href=author.url+'/delete') 刪除作者資料
     p
-      a(href=author.url+'/update') Update author
+      a(href=author.url+'/update') 更新作者資料

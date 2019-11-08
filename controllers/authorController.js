@@ -12,7 +12,7 @@ exports.author_list = (req, res, next) => {
       if (err) { return next(err) }
       debug('update error:' + listAuthors)
       // Successful, so render
-      res.render('author_list', { title: 'Author List', author_list: listAuthors })
+      res.render('author_list', { title: '作者目錄', author_list: listAuthors })
     })
 }
 
@@ -35,13 +35,13 @@ exports.author_detail = (req, res, next) => {
       return next(err)
     }
     // Successful, so render.
-    res.render('author_detail', { title: 'Author Detail', author: results.author, author_books: results.authors_books })
+    res.render('author_detail', { title: '作者資訊', author: results.author, author_books: results.authors_books })
   })
 }
 
 // Display Author create form on GET.
 exports.author_create_get = (req, res, next) => {
-  res.render('author_form', { title: 'Create Author' })
+  res.render('author_form', { title: '新增作者' })
 }
 
 // Handle Author create on POST.
@@ -68,7 +68,7 @@ exports.author_create_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render('author_form', { title: 'Create Author', author: req.body, errors: errors.array() })
+      res.render('author_form', { title: '新增作者', author: req.body, errors: errors.array() })
     } else {
       // Data from form is valid.
 
@@ -104,7 +104,7 @@ exports.author_delete_get = (req, res, next) => {
       res.redirect('/catalog/authors')
     }
     // Successful, so render.
-    res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books })
+    res.render('author_delete', { title: '刪除作者', author: results.author, author_books: results.authors_books })
   })
 }
 
@@ -122,7 +122,7 @@ exports.author_delete_post = (req, res, next) => {
     // Success
     if (results.authors_books.length > 0) {
       // Author has books. Render in same way as for GET route.
-      res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books })
+      res.render('author_delete', { title: '刪除作者', author: results.author, author_books: results.authors_books })
     } else {
       // Author has no books. Delete object and redirect to the list of authors.
       Author.findByIdAndRemove(req.body.authorid, (err) => {
@@ -144,7 +144,7 @@ exports.author_update_get = (req, res, next) => {
         return next(err)
       }
       debug('update results:' + results)
-      res.render('author_form', { title: 'Update Author', author: results })
+      res.render('author_form', { title: '更新作者資訊', author: results })
     })
 }
 
@@ -180,7 +180,7 @@ exports.author_update_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render('author_form', { title: 'Update Author', author: author, errors: errors.array() })
+      res.render('author_form', { title: '更新作者資訊', author: author, errors: errors.array() })
     } else {
       // Data from form is valid.
 

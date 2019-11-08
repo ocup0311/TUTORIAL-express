@@ -2,11 +2,11 @@ extends layout
 
 block content
 
-  h1 Genre: #{genre.name}
+  h1 類別： #{genre.name}
   
   div(style='margin-left:20px;margin-top:20px')
 
-    h4 Books
+    h4 書籍：
     
     dl
       each book in genre_books
@@ -15,10 +15,10 @@ block content
         dd #{book.summary}
 
       else
-        p This genre has no books
+        p 此類別暫無任何書籍，敬請期待。
 
   hr
   p
-    a(href=genre.url+'/delete') Delete genre
+    a(href=genre.url+'/delete') 刪除類別資訊
   p
-    a(href=genre.url+'/update') Update genre
+    a(href=genre.url+'/update') 更新類別資訊

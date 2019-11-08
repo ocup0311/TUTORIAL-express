@@ -5,12 +5,12 @@ block content
   form(method='POST' action='')
 
     div.form-group
-      label(for='username') Username:
+      label(for='username') 使用者名稱：
       input#username.form-control(type='text' placeholder='enter your username' name='username' value=(undefined===user ? '' : user.username) required='true' autofocus)
-      label(for='password') Password:
+      label(for='password') 密碼：
       input#password.form-control(type='password' name='password' value=(undefined===user ? '' : user.password) required='true')
 
-    button.btn.btn-primary(type='submit') Login
+    button.btn.btn-primary(type='submit') 登入
 
 
   if errors 

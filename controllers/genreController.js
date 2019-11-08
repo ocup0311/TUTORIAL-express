@@ -10,7 +10,7 @@ exports.genre_list = (req, res, next) => {
     .exec(function (err, listGenre) {
       if (err) { return next(err) }
       // Successful, so render
-      res.render('genre_list', { title: 'Genre List', genre_list: listGenre })
+      res.render('genre_list', { title: '類別目錄', genre_list: listGenre })
     })
 }
 
@@ -35,13 +35,13 @@ exports.genre_detail = (req, res, next) => {
       return next(err)
     }
     // Successful, so render
-    res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books })
+    res.render('genre_detail', { title: `類別 ${results.genre.name} 資訊`, genre: results.genre, genre_books: results.genre_books })
   })
 }
 
 // Display Genre create form on GET.
 exports.genre_create_get = (req, res, next) => {
-  res.render('genre_form', { title: 'Create Genre' })
+  res.render('genre_form', { title: '新增類別' })
 }
 
 // Handle Genre create on POST.
@@ -65,7 +65,7 @@ exports.genre_create_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render the form again with sanitized values/error messages.
-      res.render('genre_form', { title: 'Create Genre', genre: genre, errors: errors.array() })
+      res.render('genre_form', { title: '新增類別', genre: genre, errors: errors.array() })
     } else {
       // Data from form is valid.
       // Check if Genre with same name already exists.
@@ -103,7 +103,7 @@ exports.genre_delete_get = (req, res, next) => {
       res.redirect('/catalog/genres')
     }
     // Successful, so render.
-    res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genres_books })
+    res.render('genre_delete', { title: '刪除類別資訊', genre: results.genre, genre_books: results.genres_books })
   })
 }
 
@@ -121,7 +121,7 @@ exports.genre_delete_post = (req, res, next) => {
     // Success
     if (results.genres_books.length > 0) {
       // Genre has books. Render in same way as for GET route.
-      res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genres_books })
+      res.render('genre_delete', { title: '刪除類別資訊', genre: results.genre, genre_books: results.genres_books })
     } else {
       // Genre has no books. Delete object and redirect to the list of genres.
       Genre.findByIdAndRemove(req.body.genreid, (err) => {
@@ -143,7 +143,7 @@ exports.genre_update_get = (req, res, next) => {
         err.status = 404
         return next(err)
       }
-      res.render('genre_form', { title: 'Update Genre', genre: results })
+      res.render('genre_form', { title: '更新類別資訊', genre: results })
     })
 }
 
@@ -169,7 +169,7 @@ exports.genre_update_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render the form again with sanitized values/error messages.
-      res.render('genre_form', { title: 'Update Genre', genre: genre, errors: errors.array() })
+      res.render('genre_form', { title: '更新類別資訊', genre: genre, errors: errors.array() })
     } else {
       Genre.findByIdAndUpdate(req.params.id, genre, {}, (err, thegenre) => {
         if (err) { return next(err) }

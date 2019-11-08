@@ -2,7 +2,7 @@ const passport = require('passport')
 const validator = require('express-validator')
 
 exports.user_signup_get = (req, res) => {
-  res.render('signup')
+  res.render('signup', { title: '註冊新帳戶' })
 }
 
 exports.user_signup_post = [
@@ -28,7 +28,7 @@ exports.user_signup_post = [
 
     if (!errors.isEmpty()) {
       // Successful, so render.
-      res.render('signup', { title: 'Sign up your Account', user: req.body, errors: errors.array() })
+      res.render('signup', { title: '註冊新帳戶', user: req.body, errors: errors.array() })
     } else {
       next()
     }
@@ -43,7 +43,7 @@ exports.user_signup_post = [
 
 exports.user_login_get = (req, res) => {
   console.log(res.locals)
-  res.render('login', { title: 'Login' })
+  res.render('login', { title: '登入' })
 }
 
 exports.user_login_post = [
@@ -57,7 +57,7 @@ exports.user_login_post = [
 
     if (!errors.isEmpty()) {
       // Successful, so render.
-      res.render('login', { title: 'Login', user: req.body, errors: errors.array() })
+      res.render('login', { title: '登入', user: req.body, errors: errors.array() })
     } else {
       next()
     }

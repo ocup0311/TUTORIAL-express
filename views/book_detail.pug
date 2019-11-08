@@ -1,20 +1,20 @@
 extends layout
 
 block content
-  h1 Title: #{book.title}
+  h1 #{book.title}
   
-  p #[strong Author:] 
+  p #[strong 作者：] 
     a(href=book.author.url) #{book.author.name}
-  p #[strong Summary:] #{book.summary}
+  p #[strong 摘要：] #{book.summary}
   p #[strong ISBN:] #{book.isbn}
-  p #[strong Genre:]&nbsp;
+  p #[strong 類別：]&nbsp;
     each val, index in book.genre
       a(href=val.url) #{val.name}
       if index < book.genre.length - 1
         |, 
   
   div(style='margin-left:20px;margin-top:20px')
-    h4 Copies
+    h4 本館藏書如下：
     
     each val in book_instances
       hr
@@ -24,17 +24,17 @@ block content
         p.text-danger #{val.status}
       else
         p.text-warning #{val.status} 
-      p #[strong Imprint:] #{val.imprint}
+      p #[strong 出版商：] #{val.imprint}
       if val.status!='Available'
-        p #[strong Due back:] #{val.due_back_formatted}
+        p #[strong 預定歸還日：] #{val.dueBackFormatted}
       p #[strong Id:]&nbsp;
         a(href=val.url) #{val._id}
  
     else
-      p There are no copies of this book in the library.
+      p 本館尚未有「#{book.title}」的藏書，欲提供者請與本館聯絡，萬分感謝。
 
   hr
   p
-    a(href=book.url+'/delete') Delete Book
+    a(href=book.url+'/delete') 刪除書籍資訊
   p
-    a(href=book.url+'/update') Update Book    
+    a(href=book.url+'/update') 更新書籍資訊

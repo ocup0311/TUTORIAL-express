@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  h1 #{title}: #{book.name}
+  h1 #{title}: #{book.title}
   
   if book_bookinstances.length
   
-    p #[strong Delete the following bookinstances before attempting to delete this book.]
+    p #[strong 刪除此書籍之前，請先移除此書籍的所有現存藏書資訊。]
   
     div(style='margin-left:20px;margin-top:20px')
 
-      h4 Bookinstances
+      h4 「#{book.title}」館藏資訊如下：
     
       dl
       each bookinstance in book_bookinstances
@@ -18,10 +18,10 @@ block content
         dd #{bookinstance.imprint}
 
   else
-    p Do you really want to delete this Book?
+    p 確定要刪除「#{book.title}」嗎？
     
     form(method='POST' action='')
       div.form-group
         input#bookid.form-control(type='hidden',name='bookid', required='true', value=book._id )
 
-      button.btn.btn-primary(type='submit') Delete
+      button.btn.btn-primary(type='submit') 確認刪除

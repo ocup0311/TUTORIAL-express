@@ -5,11 +5,11 @@ block content
   
   if genre_books.length
   
-    p #[strong Delete the following books before attempting to delete this genre.]
+    p #[strong 刪除此類別之前，請先移除包含此類別的所有書籍。]
   
     div(style='margin-left:20px;margin-top:20px')
 
-      h4 Books
+      h4 類別「#{genre.name}」現有的書籍如下：
     
       dl
       each book in genre_books
@@ -18,10 +18,10 @@ block content
         dd #{book.summary}
 
   else
-    p Do you really want to delete this Genre?
+    p 確定要刪除類別「#{genre.name}」嗎？
     
     form(method='POST' action='')
       div.form-group
         input#genreid.form-control(type='hidden',name='genreid', required='true', value=genre._id )
 
-      button.btn.btn-primary(type='submit') Delete
+      button.btn.btn-primary(type='submit') 確認刪除

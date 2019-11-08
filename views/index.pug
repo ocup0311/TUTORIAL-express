@@ -2,18 +2,18 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
+  p 歡迎來到  #[big #[strong 歐杯的圖書世界]～]  這裡是透過 !{'<a target="_blank" href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Tutorial_local_library_website"> MDN的教學課程 </a>'} 學習使用 Express 框架來建立一個圖書館網站的成品展示。
 
-  h1 Dynamic content
+  h1 圖書館動態內容
 
   if error
-    p Error getting dynamic content.
+    p 無法取得圖書館動態內容
   else
-    p The library has the following record counts:
+    p 當前圖書館各項統計如下：
 
     ul
-      li #[strong Books:] !{data.book_count}
-      li #[strong Copies:] !{data.book_instance_count}
-      li #[strong Copies available:] !{data.book_instance_available_count} 
-      li #[strong Authors:] !{data.author_count}
-      li #[strong Genres:] !{data.genre_count}
+      li #[strong 書籍：] 目前有 #[strong !{data.book_count}] 款豐富的藏書供您閱讀。
+      li #[strong 藏書數：] 本館藏書已達 #[strong !{data.book_instance_count}] 本。
+      li #[strong 在館藏書：] 目前尚有 #[strong !{data.book_instance_available_count}] 本藏書可供借閱。
+      li #[strong 作者：] 目前涵蓋 #[strong !{data.author_count}] 位作者的書籍。
+      li #[strong 類別：] 目前已涵蓋 #[strong !{data.genre_count}] 種類別的書籍。
