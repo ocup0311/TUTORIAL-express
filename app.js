@@ -1,3 +1,5 @@
+require('dotenv').config()
+const { MONGODB_URI, PASSPORT_SECRET } = require('./configs')
 const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
@@ -22,19 +24,23 @@ const app = express()
 
 // Set up mongoose connection
 const mongoose = require('mongoose')
-const mongoDB = process.env.MONGODB_URI || 'your mongoDB url'
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(helmet()) // 不確定放哪步驟，add/disable specific headers
 
 // 設置 session
-app.use(session({
-  secret: 'ocupsecret',
-  saveUninitialized: true,
-  resave: false
-}))
+app.use(
+  session({
+    secret: PASSPORT_SECRET,
+    saveUninitialized: true,
+    resave: false,
+  })
+)
 
 // 從user資料中撈ID
 passport.serializeUser(function (user, done) {
@@ -48,64 +54,75 @@ passport.deserializeUser(function (id, done) {
 })
 
 // 驗證login
-passport.use('login', new LocalStrategy({
-  passReqToCallback: true
-},
-(req, username, password, done) => {
-  User.findOne({ username: username }, (err, user) => {
-    const isValidPassword = (user, password) => {
-      return bcrypt.compareSync(password, user.password)
-    }
+passport.use(
+  'login',
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+    },
+    (req, username, password, done) => {
+      User.findOne({ username: username }, (err, user) => {
+        const isValidPassword = (user, password) => {
+          return bcrypt.compareSync(password, user.password)
+        }
 
-    if (err) {
-      return done(err)
-    }
+        if (err) {
+          return done(err)
+        }
 
-    if (!user) {
-      return done(null, false, req.flash('info', 'User not found.'))
-    }
+        if (!user) {
+          return done(null, false, req.flash('info', 'User not found.'))
+        }
 
-    if (!isValidPassword(user, password)) {
-      return done(null, false, req.flash('info', 'Invalid password'))
-    }
+        if (!isValidPassword(user, password)) {
+          return done(null, false, req.flash('info', 'Invalid password'))
+        }
 
-    return done(null, user)
-  })
-}))
+        return done(null, user)
+      })
+    }
+  )
+)
 
 // 驗證signup
-passport.use('signup', new LocalStrategy({
-  passReqToCallback: true
-}, (req, username, password, done) => {
-  const findOrCreateUser = () => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        return done(err)
-      }
-      if (user) {
-        return done(null, false, req.flash('info', 'User already exists'))
-      } else {
-        const newUser = new User({
-          username: username,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
-          email: req.body.email,
-          first_name: req.body.first_name,
-          family_name: req.body.family_name
-        })
-
-        newUser.save(function (err, user) {
+passport.use(
+  'signup',
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+    },
+    (req, username, password, done) => {
+      const findOrCreateUser = () => {
+        User.findOne({ username: username }, (err, user) => {
           if (err) {
-            throw err
+            return done(err)
           }
+          if (user) {
+            return done(null, false, req.flash('info', 'User already exists'))
+          } else {
+            const newUser = new User({
+              username: username,
+              password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+              email: req.body.email,
+              first_name: req.body.first_name,
+              family_name: req.body.family_name,
+            })
 
-          return done(null, user)
+            newUser.save(function (err, user) {
+              if (err) {
+                throw err
+              }
+
+              return done(null, user)
+            })
+          }
         })
       }
-    })
-  }
 
-  process.nextTick(findOrCreateUser)
-}))
+      process.nextTick(findOrCreateUser)
+    }
+  )
+)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
