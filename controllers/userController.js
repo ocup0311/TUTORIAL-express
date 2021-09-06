@@ -7,12 +7,28 @@ exports.user_signup_get = (req, res) => {
 
 exports.user_signup_post = [
   // Validate fields.
-  validator.body('username', 'Book must be specified').isLength({ min: 6 }).trim(),
-  validator.body('password', 'password must be more than 6 characters').isLength({ min: 6 }).trim(),
-  validator.body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
-    .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
-  validator.body('family_name').isLength({ min: 1 }).trim().withMessage('Family name must be specified.')
-    .isAlphanumeric().withMessage('Family name has non-alphanumeric characters.'),
+  validator
+    .body('username', 'username must be more than 6 characters')
+    .isLength({ min: 6 })
+    .trim(),
+  validator
+    .body('password', 'password must be more than 6 characters')
+    .isLength({ min: 6 })
+    .trim(),
+  validator
+    .body('first_name')
+    .isLength({ min: 1 })
+    .trim()
+    .withMessage('First name must be specified.')
+    .isAlphanumeric()
+    .withMessage('First name has non-alphanumeric characters.'),
+  validator
+    .body('family_name')
+    .isLength({ min: 1 })
+    .trim()
+    .withMessage('Family name must be specified.')
+    .isAlphanumeric()
+    .withMessage('Family name has non-alphanumeric characters.'),
   validator.body('email', 'Invalid email').isEmail().normalizeEmail().trim(),
 
   // Sanitize fields.
@@ -28,7 +44,11 @@ exports.user_signup_post = [
 
     if (!errors.isEmpty()) {
       // Successful, so render.
-      res.render('signup', { title: '註冊新帳戶', user: req.body, errors: errors.array() })
+      res.render('signup', {
+        title: '註冊新帳戶',
+        user: req.body,
+        errors: errors.array(),
+      })
     } else {
       next()
     }
@@ -37,8 +57,8 @@ exports.user_signup_post = [
   passport.authenticate('signup', {
     successRedirect: '/',
     failureRedirect: '/users/signup',
-    failureFlash: true
-  })
+    failureFlash: true,
+  }),
 ]
 
 exports.user_login_get = (req, res) => {
@@ -57,7 +77,11 @@ exports.user_login_post = [
 
     if (!errors.isEmpty()) {
       // Successful, so render.
-      res.render('login', { title: '登入', user: req.body, errors: errors.array() })
+      res.render('login', {
+        title: '登入',
+        user: req.body,
+        errors: errors.array(),
+      })
     } else {
       next()
     }
@@ -66,8 +90,9 @@ exports.user_login_post = [
   passport.authenticate('login', {
     successRedirect: '/users/profile',
     failureRedirect: '/users/login',
-    failureFlash: true
-  })]
+    failureFlash: true,
+  }),
+]
 
 exports.user_logout = (req, res) => {
   req.logOut()
@@ -80,4 +105,5 @@ exports.user_logout = (req, res) => {
 exports.user_profile = [
   (req, res) => {
     res.render('profile', { user: req.user })
-  }]
+  },
+]

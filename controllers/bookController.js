@@ -131,7 +131,7 @@ exports.book_create_post = [
     .isLength({ min: 1 })
     .trim(),
   validator
-    .body('summary', 'Summary must not be empty.')
+    .body('summary', '摘要請介於 50~200 字')
     .isLength({ min: 50, max: 200 })
     .trim(),
   validator.body('isbn', 'ISBN must not be empty').isLength({ min: 1 }).trim(),
@@ -157,6 +157,8 @@ exports.book_create_post = [
       isbn: req.body.isbn,
       genre: req.body.genre,
     })
+
+    console.log('book:', book)
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
