@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { MONGODB_URI, PASSPORT_SECRET } = require('./configs')
+const { MONGODB_URI, PASSPORT_SECRET, COOKIES_SECRET } = require('./configs')
 const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
@@ -32,6 +32,7 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(helmet()) // 不確定放哪步驟，add/disable specific headers
+app.use(cookieParser(COOKIES_SECRET))
 
 // 設置 session
 app.use(
@@ -133,7 +134,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
 app.use(compression()) // Compress all routes
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -141,14 +141,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 // passport
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
 
 // 設置全域變數
 app.use((req, res, next) => {
   app.locals.user = req.user
   next()
 })
-
-app.use(flash())
 
 // 設置路徑
 app.use('/', indexRouter)
@@ -162,7 +161,6 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   // render the error page
