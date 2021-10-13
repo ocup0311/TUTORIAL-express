@@ -97,13 +97,18 @@ exports.user_login_post = [
 exports.user_logout = (req, res) => {
   req.logOut()
   req.session.destroy(() => {
-    // res.clearCookie('connect.sid')
+    res.clearCookie('connect.sid')
     res.redirect('/users/login')
   })
 }
 
 exports.user_profile = [
   (req, res) => {
-    res.render('profile', { user: req.user })
+    if (req.user) {
+      res.render('profile', { user: req.user })
+    } else {
+      req.flash('info', 'Need to Login first.')
+      res.redirect('/users/login')
+    }
   },
 ]
